@@ -1,0 +1,109 @@
+<!DOCTYPE HTML>
+<html>
+ <head>
+  <meta charset="utf-8">
+  <title>Тег H1 и H2</title>
+  <script>
+  //наследование
+	function inherit(p){
+		if(p == null) throw TypeError();
+		if(Object.create) return Object.create(p);
+		var t = typeof p;
+		if(t!="object" && t!="function") throw TypeError();	
+		function f() {};
+		f.prototype = p;
+		return new f();
+	}
+	
+	//свойства объектов
+	var book = {
+		"main title": "Javascript",
+		"sub-title": "The Definite Guide",
+		"for": "all audiences",
+		author: {
+			firstname: "David",
+			surname: "Flanagan"
+		}
+	};
+	var title = book["main title"]
+	var firstname = book.author.firstname;
+	
+	//методы чтения и записи свойств
+	var p = {
+		x:1.0,
+		y:1.0,
+		get r(){ return Math.sqrt(this.x*this.x + this.y*this.y); },
+		set r(newvalue){
+			var oldvalue = Math.sqrt(this.x*this.x + this.y*this.y);
+			var ratio = newvalue / oldvalue;
+			this.x *= ratio;
+			this.y *= ratio;
+		}
+		
+		get theta(){ return Math.atan2(this.y, this.x); }
+	
+	};
+	//создание нового свойства с заданными атрибутами
+	var o = {};
+	Object.defineProperty(o, "x", {
+									value:1,
+									writable: true,
+									enumerable: false,
+									configurable: true
+									});
+	//переопределить свойство
+	Object.defineProperty(o, "x", { writable:false });
+	//пока доступно для настройки можно менять значение
+	Object.defineProperty(o, "x", {value:2});
+	//превратить простое свойство в свойство с методом доступа
+	Object.defineProperty(o, "x", { get: function() { return 0; } });
+	
+	var pr = Object.define Properties({}, {
+		x: {value:1, writable:true, enumerable: true, configurable: true},
+		x: {value:1, writable:true, enumerable: true, configurable: true},
+		r:{
+			get function(){ return Math.sqrt(this.x*this.x + this.y*this.y); },
+			enumerable: true, 
+			configurable: true
+		}
+	});
+	
+	//копирование свойств вместе со всеми атрибутами
+	Object.defineProperty(Object.prototype, "extend", 
+	{
+		writable:true,
+		enumerable: true,
+		configurable: true,
+		value: function(o){
+			var names = Object,getOwnPropertyNames(o);
+			for(var i=0; i<names.lenght; i++){
+				if(names[i] in this) continue;
+				var desc = Object.getOwnPropertyDescriptor(o, namens[i]);
+				Object.defineProperty(this, names[i], desc);
+			}
+		}
+	});
+	
+	//функция, возвращающая класс объекта
+	function classof(){
+		if(o == null) return "Null";
+		if (o == undefined) return "Undefined";
+		return Object.prototype.toString.call(o).slice(8, -1);
+	} 
+  </script>
+ </head>
+ <body>
+
+  <h1>Lorem ipsum dolor sit amet</h1>
+  <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diem 
+  nonummy nibh euismod tincidunt ut lacreet dolore magna 
+  aliguam erat volutpat.</p>
+
+  <h2>Ut wisis enim ad minim veniam</h2>
+  <p>Ut wisis enim ad minim veniam, quis nostrud exerci tution 
+  ullamcorper suscipit lobortis nisl ut aliquip ex ea 
+  commodo consequat.</p>
+
+ </body>
+</html>
+
